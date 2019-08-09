@@ -1,20 +1,26 @@
 import sys
 import pygame
-from circle import Circle
+from snake import Snake
+
+SCREEN_SIZE = (1000, 600)
+SCREEN_BACK_COLOR = (240, 240, 240)
+SCREEN_CAPTION = "A Snake"
+HEAD_COLOR = (238, 107, 39)
+BODY_COLOR = (111, 227, 146)
+HEAD_RIDUS = 5
+HEAD_MOVE_STEP = 5
+BORN_POSX = 300
+BORN_POSY = 150
+BORN_LENGTH = 4
+
 
 def main():
-    SCREEN_SIZE = (1000, 600)
-    SCREEN_BACK_COLOR = (240, 240, 240)
-    SCREEN_CAPTION = "A Moving Circle"
-    CIRCLE_COLOR = (238, 107, 39)
-    CIRCLE_RIDUS = 6
-
     pygame.init()
     screen = pygame.display.set_mode(SCREEN_SIZE)
     pygame.display.set_caption(SCREEN_CAPTION)
     screen.fill(SCREEN_BACK_COLOR)
 
-    circle = Circle(300, 150)
+    snake = Snake(BORN_POSX, BORN_POSY, BORN_LENGTH, SCREEN_SIZE[0], SCREEN_SIZE[1])
 
     while True:
         for ev in pygame.event.get():
@@ -24,28 +30,32 @@ def main():
 
             if ev.type == pygame.KEYDOWN:
                 if ev.key == pygame.K_UP:
-                    circle.set_up()
+                    snake.set_up()
                 if ev.key == pygame.K_DOWN:
-                    circle.set_down()
+                    snake.set_down()
                 if ev.key == pygame.K_LEFT:
-                    circle.set_left()
+                    snake.set_left()
                 if ev.key == pygame.K_RIGHT:
-                    circle.set_right()
+                    snake.set_right()
 
             if ev.type == pygame.KEYUP:
                 if ev.key == pygame.K_UP:
-                    circle.reset_up()
+                    snake.reset_up()
                 if ev.key == pygame.K_DOWN:
-                    circle.reset_down()
+                    snake.reset_down()
                 if ev.key == pygame.K_LEFT:
-                    circle.reset_left()
+                    snake.reset_left()
                 if ev.key == pygame.K_RIGHT:
-                    circle.reset_right()
+                    snake.reset_right()
 
-        pygame.time.delay(5)
-        circle.move()
+        # pygame.time.delay(5)
+        snake.move(HEAD_MOVE_STEP)
         screen.fill(SCREEN_BACK_COLOR)
-        pygame.draw.circle(screen, CIRCLE_COLOR, (circle.posx, circle.posy), CIRCLE_RIDUS)
+
+        for i in range(1, len(snake.body)):
+            pygame.draw.circle(screen, BODY_COLOR, (snake.body[i][0], snake.body[i][1]), HEAD_RIDUS)
+        pygame.draw.circle(screen, HEAD_COLOR, (snake.body[0][0], snake.body[0][1]), HEAD_RIDUS)
+
         pygame.display.flip()
 
 
