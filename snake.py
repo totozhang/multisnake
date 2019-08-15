@@ -17,6 +17,9 @@ class Snake():
         for i in range(0, length):
             self.body.append([headx, heady])
 
+    def grow(self):
+        self.body.append([self.headx, self.heady])
+
     def move(self, step):
         if (self.up != Direction.none or self.down != Direction.none or
                 self.left != Direction.none or self.right != Direction.none):

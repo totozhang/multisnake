@@ -54,6 +54,12 @@ def main():
 
         # pygame.time.delay(5)
         snake.move(HEAD_MOVE_STEP)
+        if food.is_eaten():
+            del(food)
+            food = Food(SCREEN_SIZE[0], SCREEN_SIZE[1], snake)
+            snake.grow()
+
+
         screen.fill(SCREEN_BACK_COLOR)
 
         # foods

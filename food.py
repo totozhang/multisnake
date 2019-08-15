@@ -8,10 +8,10 @@ class Food():
         self.snake = snake
 
     def is_eaten(self):
-        for item in self.snake:
-            if self.snake.headx == self.posx and self.snake.heady == self.posy:
-                return True
-        return False
+        if int((self.snake.headx - self.posx) ** 2 + (self.snake.heady - self.posy) ** 2) < 100:
+            return True
+        else:
+            return False
 
 
 def get_valid_position(screenedgex, screenedgey, snake):
