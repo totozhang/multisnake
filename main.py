@@ -1,5 +1,6 @@
 import sys
 import pygame
+from food import Food
 from snake import Snake
 
 SCREEN_SIZE = (1000, 600)
@@ -7,6 +8,8 @@ SCREEN_BACK_COLOR = (240, 240, 240)
 SCREEN_CAPTION = "A Snake"
 HEAD_COLOR = (238, 107, 39)
 BODY_COLOR = (111, 227, 146)
+FOOD_COLOR = (44, 36, 84)
+FOOD_RIDUS = 3
 HEAD_RIDUS = 5
 HEAD_MOVE_STEP = 5
 BORN_POSX = 300
@@ -21,6 +24,7 @@ def main():
     screen.fill(SCREEN_BACK_COLOR)
 
     snake = Snake(BORN_POSX, BORN_POSY, BORN_LENGTH, SCREEN_SIZE[0], SCREEN_SIZE[1])
+    food = Food(SCREEN_SIZE[0], SCREEN_SIZE[1], snake)
 
     while True:
         for ev in pygame.event.get():
@@ -52,6 +56,10 @@ def main():
         snake.move(HEAD_MOVE_STEP)
         screen.fill(SCREEN_BACK_COLOR)
 
+        # foods
+        pygame.draw.circle(screen, FOOD_COLOR, (food.posx, food.posy), FOOD_RIDUS)
+
+        # snake
         for i in range(1, len(snake.body)):
             pygame.draw.circle(screen, BODY_COLOR, (snake.body[i][0], snake.body[i][1]), HEAD_RIDUS)
         pygame.draw.circle(screen, HEAD_COLOR, (snake.body[0][0], snake.body[0][1]), HEAD_RIDUS)
